@@ -30,6 +30,12 @@ docker exec -it n8n-local-desktop-ollama-1 ollama pull llama3.2:3b
 
 Browse available models at [ollama.com/library](https://ollama.com/library).
 
+## Roadmap
+
+- [ ] Integrate n8n routes into the app menu  
+- [ ] Add an About page with app version info  
+- [ ] Make it possible to install new models via the app (currently only available via CLI)  
+
 ---
 
 For development setup, build instructions, and release process, see [docs/development.md](docs/development.md).

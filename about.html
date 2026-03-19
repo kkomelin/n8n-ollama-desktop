@@ -6,36 +6,8 @@
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'">
 <title>About n8n Local Desktop</title>
+<link rel="stylesheet" href="shared.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap');
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg-deep:       #0d0d0d;
-    --bg-card:       #1a1a1a;
-    --border:        #2a2a2a;
-    --text-primary:  #f5f5f5;
-    --text-secondary:#a3a3a3;
-    --text-dim:      #666;
-    --accent:        #FF6D5A;
-    --accent-dim:    rgba(255,109,90,.15);
-  }
-
-  html, body {
-    height: 100%;
-    overflow: hidden;
-    background: var(--bg-deep);
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    color: var(--text-primary);
-    user-select: none;
-  }
-
-  .bg {
-    position: fixed; inset: 0;
-    background: var(--bg-deep);
-    z-index: 0;
-  }
   .bg::before {
     content: '';
     position: absolute; inset: 0;
@@ -43,13 +15,7 @@
       radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,109,90,.06) 0%, transparent 70%);
   }
 
-  .wrapper {
-    position: relative; z-index: 1;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    height: 100%; padding: 32px 24px;
-    gap: 0;
-  }
+  .wrapper { padding: 32px 24px; gap: 0; }
 
   .app-icon {
     width: 72px; height: 72px;

@@ -3,7 +3,7 @@
 ## How it works
 
 A loader screen shows live Docker output while images are pulled and services start.
-Once n8n responds on `http://localhost:5678/healthz`, the loader transitions to the main app window.
+Once n8n responds on `http://localhost:5678`, the loader transitions to the main app window.
 Closing the window runs `docker compose down` and stops both services.
 
 ## Prerequisites

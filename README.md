@@ -30,12 +30,18 @@ docker exec -it n8n-local-desktop-ollama-1 ollama pull llama3.2:3b
 
 Browse available models at [ollama.com/library](https://ollama.com/library).
 
+## Connecting to Host LLM Servers
+
+You can use LLM servers running directly on your machine, such as [LM Studio](https://lmstudio.ai/), [llama.cpp](https://github.com/ggerganov/llama.cpp) server, or a host-installed [Ollama](https://ollama.com/) instance, alongside or instead of the built-in Ollama container.
+
+See [docs/host-llm-servers.md](docs/host-llm-servers.md) for setup instructions.
+
 ## Roadmap
 
-- [ ] Integrate n8n routes into the app menu  
-- [ ] Add an About page with app version info  
-- [ ] Make it possible to install new models via the app (currently only available via CLI)  
-- [ ] Consider supporting llama.cpp
+- [x] Make it possible to connect with the host machine's LLM servers from n8n workflows, e.g. LM Studio, llama.cpp, Ollama, etc.
+- [ ] Integrate n8n routes into the app menu
+- [ ] Add an About page with app version info
+- [ ] Make it possible to install new models via the app (currently only available via CLI)
 
 ---
 

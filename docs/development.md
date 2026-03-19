@@ -41,21 +41,6 @@ Data is persisted in the app's user data directory:
 | `n8n-custom` | Custom n8n nodes (auto-loaded on startup) |
 | `ollama-data` | Ollama models and config |
 
-## Installing additional Ollama models
-
-To download more models, run:
-
-```bash
-docker exec -it n8n-local-desktop-ollama-1 ollama pull <model-name>
-```
-
-For example:
-```bash
-docker exec -it n8n-local-desktop-ollama-1 ollama pull llama3.2:3b
-```
-
-Browse available models at [ollama.com/library](https://ollama.com/library).
-
 ## Build
 
 ```bash

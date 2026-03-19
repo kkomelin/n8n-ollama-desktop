@@ -35,6 +35,7 @@ Browse available models at [ollama.com/library](https://ollama.com/library).
 - [ ] Integrate n8n routes into the app menu  
 - [ ] Add an About page with app version info  
 - [ ] Make it possible to install new models via the app (currently only available via CLI)  
+- [ ] Consider supporting llama.cpp
 
 ---
 

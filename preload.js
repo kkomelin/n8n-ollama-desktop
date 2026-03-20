@@ -16,6 +16,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('error', handler)
     return () => ipcRenderer.removeListener('error', handler)
   },
+  getTheme: () => ipcRenderer.invoke('theme:get'),
+  onThemeChange: (cb) => {
+    const handler = (_e, theme) => cb(theme)
+    ipcRenderer.on('theme-change', handler)
+    return () => ipcRenderer.removeListener('theme-change', handler)
+  },
   retry: () => ipcRenderer.send('retry'),
   quit: () => ipcRenderer.send('quit-app'),
   openExternal: (url) => ipcRenderer.send('open-external', url),

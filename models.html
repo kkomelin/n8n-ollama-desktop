@@ -7,6 +7,7 @@
       content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'">
 <title>Models</title>
 <link rel="stylesheet" href="shared.css">
+<script src="shared.js"></script>
 <style>
   html, body { overflow-y: auto; }
 
@@ -139,7 +140,7 @@
     cursor: pointer;
     transition: all .15s;
   }
-  .btn-confirm-no:hover { background: rgba(255, 255, 255, .05); }
+  .btn-confirm-no:hover { background: var(--hover-subtle); }
 
   .empty-state {
     font-size: 11px;

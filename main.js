@@ -1,4 +1,11 @@
-const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron')
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Menu,
+  shell,
+  nativeTheme,
+} = require('electron')
 const { spawn, execSync } = require('child_process')
 const path = require('path')
 const http = require('http')
@@ -21,11 +28,77 @@ const ALLOWED_ORIGIN = `http://localhost:${PORT}`
 
 let loaderWindow = null
 let modelsWindow = null
+let aboutWindow = null
+let currentTheme = null
+let themeInterval = null
 let composeProcess = null
 let composePath = null
 let dataDir = null
 
 const activePulls = new Map()
+
+// ── Theme sync ──
+
+const DETECT_THEME_JS = `(() => {
+  const html = document.documentElement
+  const body = document.body
+  for (const el of [html, body]) {
+    if (el.classList.contains('theme-dark') || el.classList.contains('dark')) return 'dark'
+    if (el.classList.contains('theme-light') || el.classList.contains('light')) return 'light'
+    const attr = el.getAttribute('data-theme')
+    if (attr === 'dark') return 'dark'
+    if (attr === 'light') return 'light'
+  }
+  try {
+    for (const key of ['N8N_THEME', 'n8n-theme', 'theme']) {
+      const v = localStorage.getItem(key)
+      if (v === 'dark') return 'dark'
+      if (v === 'light') return 'light'
+    }
+  } catch (_) {}
+  const bg = getComputedStyle(body).backgroundColor
+  const m = bg.match(/rgb\\((\\d+),\\s*(\\d+),\\s*(\\d+)\\)/)
+  if (m) return 0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3] < 128 ? 'dark' : 'light'
+  return null
+})()`
+
+function themeFilePath() {
+  return path.join(app.getPath('userData'), '.n8n-theme')
+}
+
+function loadPersistedTheme() {
+  try {
+    const t = fs.readFileSync(themeFilePath(), 'utf8').trim()
+    return t === 'dark' || t === 'light' ? t : null
+  } catch {
+    return null
+  }
+}
+
+function pushTheme(theme) {
+  try {
+    fs.writeFileSync(themeFilePath(), theme)
+  } catch {}
+  for (const win of [loaderWindow, modelsWindow, aboutWindow]) {
+    if (win && !win.isDestroyed()) win.webContents.send('theme-change', theme)
+  }
+}
+
+function startThemePolling(webContents) {
+  themeInterval = setInterval(async () => {
+    try {
+      if (webContents.isDestroyed()) {
+        clearInterval(themeInterval)
+        return
+      }
+      const theme = await webContents.executeJavaScript(DETECT_THEME_JS)
+      if (theme && theme !== currentTheme) {
+        currentTheme = theme
+        pushTheme(theme)
+      }
+    } catch (_) {}
+  }, 1000)
+}
 
 // ── Loader window ──
 
@@ -36,7 +109,7 @@ function createLoaderWindow() {
     resizable: false,
     frame: false,
     transparent: false,
-    backgroundColor: '#0d0d0d',
+    backgroundColor: nativeTheme.shouldUseDarkColors ? '#1a1a1a' : '#fafafa',
     show: false,
     ...(iconPath && { icon: iconPath }),
     webPreferences: {
@@ -242,7 +315,13 @@ function openApp() {
     loaderWindow = null
   })
 
+  mainWindow.webContents.on('did-finish-load', () => {
+    clearInterval(themeInterval)
+    startThemePolling(mainWindow.webContents)
+  })
+
   mainWindow.on('closed', () => {
+    clearInterval(themeInterval)
     stopServices()
     app.quit()
   })
@@ -419,6 +498,11 @@ async function startServices() {
 // ── About window ──
 
 function createAboutWindow() {
+  if (aboutWindow && !aboutWindow.isDestroyed()) {
+    aboutWindow.focus()
+    return
+  }
+
   const win = new BrowserWindow({
     width: 360,
     height: 460,
@@ -435,6 +519,10 @@ function createAboutWindow() {
     },
   })
 
+  aboutWindow = win
+  win.on('closed', () => {
+    aboutWindow = null
+  })
   win.setMenu(null)
   win.loadFile('about.html', {
     query: {
@@ -513,6 +601,8 @@ app.whenReady().then(() => {
 
   ollamaService.init({ composePath, dataDir })
 
+  currentTheme = loadPersistedTheme()
+
   buildMenu()
   createLoaderWindow()
 })
@@ -539,6 +629,8 @@ ipcMain.on('open-external', (_event, url) => {
 })
 
 // ── Ollama model management ──
+
+ipcMain.handle('theme:get', () => currentTheme)
 
 ipcMain.handle('ollama:status', async () => ollamaService.checkStatus())
 

@@ -5,16 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'">
-<title>About n8n Local Desktop</title>
+<title>About</title>
 <link rel="stylesheet" href="shared.css">
+<script src="shared.js"></script>
 <style>
-  .bg::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,109,90,.06) 0%, transparent 70%);
-  }
-
   .wrapper { padding: 32px 24px; gap: 0; }
 
   .app-icon {
@@ -89,30 +83,6 @@
     border-color: var(--accent);
   }
 
-  .close-btn {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 400;
-    padding: 7px 24px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: transparent;
-    color: var(--text-secondary);
-    cursor: pointer;
-    letter-spacing: .04em;
-    text-transform: lowercase;
-    transition: all .15s;
-    animation: fadeIn .6s .25s ease-out both;
-  }
-
-  .close-btn:hover {
-    background: rgba(255,255,255,.05);
-    border-color: var(--text-dim);
-    color: var(--text-primary);
-  }
-
-  .close-btn:active { transform: scale(.97); }
-
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(4px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -140,8 +110,6 @@
       </div>
     </div>
 
-    <button class="close-btn" id="close-btn">close</button>
-
   </div>
 
 <script>
@@ -159,8 +127,6 @@
       window.electronAPI?.openExternal(homepage);
     });
   }
-
-  document.getElementById('close-btn').addEventListener('click', () => window.close());
 </script>
 </body>
 </html>

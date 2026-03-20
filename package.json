@@ -48,6 +48,7 @@
       "lib/ollama-service.js",
       "lib/progress-cleaner.js",
       "shared.css",
+      "shared.js",
       "loader.html",
       "about.html",
       "models.html",

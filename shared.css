@@ -9,17 +9,71 @@
 }
 
 :root {
-  --bg-deep: #0d0d0d;
-  --bg-card: #1a1a1a;
-  --border: #2a2a2a;
+  --bg-deep: #1a1a1a;
+  --bg-card: #242424;
+  --border: #2e2e2e;
   --border-light: #3a3a3a;
-  --text-primary: #f5f5f5;
-  --text-secondary: #a3a3a3;
+  --text-primary: #f0f0f0;
+  --text-secondary: #909090;
   --text-dim: #666;
   --accent: #ff6d5a;
   --accent-dim: rgba(255, 109, 90, 0.15);
   --red-alert: #ef4444;
   --terminal-bg: #111;
+  --hover-subtle: rgba(255, 255, 255, 0.05);
+  --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* OS-level light preference (fallback when n8n theme is unknown) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-deep: #fafafa;
+    --bg-card: #ffffff;
+    --border: #ebebeb;
+    --border-light: #e0e0e0;
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-dim: #999999;
+    --accent: #ff6d5a;
+    --accent-dim: rgba(255, 109, 90, 0.12);
+    --red-alert: #e03030;
+    --terminal-bg: #f5f5f5;
+    --hover-subtle: rgba(0, 0, 0, 0.05);
+    --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Explicit theme synced from n8n — overrides OS preference (higher specificity than :root) */
+html[data-theme="light"] {
+  --bg-deep: #fafafa;
+  --bg-card: #ffffff;
+  --border: #ebebeb;
+  --border-light: #e0e0e0;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-dim: #999999;
+  --accent: #ff6d5a;
+  --accent-dim: rgba(255, 109, 90, 0.12);
+  --red-alert: #e03030;
+  --terminal-bg: #f5f5f5;
+  --hover-subtle: rgba(0, 0, 0, 0.05);
+  --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="dark"] {
+  --bg-deep: #1a1a1a;
+  --bg-card: #242424;
+  --border: #2e2e2e;
+  --border-light: #3a3a3a;
+  --text-primary: #f0f0f0;
+  --text-secondary: #909090;
+  --text-dim: #666;
+  --accent: #ff6d5a;
+  --accent-dim: rgba(255, 109, 90, 0.15);
+  --red-alert: #ef4444;
+  --terminal-bg: #111;
+  --hover-subtle: rgba(255, 255, 255, 0.05);
+  --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
 html,

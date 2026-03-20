@@ -45,7 +45,8 @@
     "files": [
       "main.js",
       "preload.js",
-      "ollama-service.js",
+      "lib/ollama-service.js",
+      "lib/progress-cleaner.js",
       "shared.css",
       "loader.html",
       "about.html",

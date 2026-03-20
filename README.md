@@ -28,18 +28,7 @@ On first launch, the `llama3.2:3b` model (~2 GB) is automatically downloaded and
 
 To install additional Ollama models, use **Tools > Models** menu.
 
-Alternatively, **launch the app first**, then run:
-
-```bash
-docker exec -it n8n-local-desktop-ollama-1 ollama pull <model-name>
-```
-
-For example:
-```bash
-docker exec -it n8n-local-desktop-ollama-1 ollama pull llama3.2:3b
-```
-
-Browse available models at [ollama.com/search](https://ollama.com/search).
+Alternatively, you can [install models via CLI](docs/models.md).
 
 ## Connecting to Host LLM Servers
 

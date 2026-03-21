@@ -16,6 +16,12 @@ services:
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-UTC}
       - TZ=${GENERIC_TIMEZONE:-UTC}
       - N8N_CUSTOM_EXTENSIONS=/home/node/.n8n/custom
+      # Disable diagnostics
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_VERSION_NOTIFICATIONS_ENABLED=false
+      - EXTERNAL_FRONTEND_HOOKS_URLS=
+      - N8N_DIAGNOSTICS_CONFIG_FRONTEND=
+      - N8N_DIAGNOSTICS_CONFIG_BACKEND=
     volumes:
       - ./n8n-data:/home/node/.n8n
       - ./n8n-files:/files

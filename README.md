@@ -31,6 +31,7 @@ Desktop Electron app that runs <a href="https://n8n.io/">n8n</a> + <a href="http
 - **Local LLMs included** - ships with Ollama pre-configured, so AI-powered workflows work out of the box
 - **Use your own models** - pull any model from Ollama's library or connect to LM Studio, llama.cpp, or a host Ollama instance
 - **Full community edition** - runs the official n8n Docker image with no integrations removed or disabled
+- **Telemetry off by default** - diagnostics and version notifications are disabled to match the local-first nature of this setup; see [docs/telemetry.md](docs/telemetry.md) to re-enable them
 
 ## AI Models
 

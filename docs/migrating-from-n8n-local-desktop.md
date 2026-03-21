@@ -26,7 +26,7 @@ The app stores data in Electron's user data path:
 | Platform | Path |
 |---|---|
 | macOS | `~/Library/Application Support/n8n Local Desktop/` |
-| Linux | `~/.config/n8n Local Desktop/` |
+| Linux | `~/.config/n8n-local-desktop/` |
 | Windows | `%APPDATA%\n8n Local Desktop\` |
 
 Inside that directory you'll find:
@@ -49,19 +49,31 @@ The new data directory is:
 | Platform | Path |
 |---|---|
 | macOS | `~/Library/Application Support/n8n Ollama Desktop/` |
-| Linux | `~/.config/n8n Ollama Desktop/` |
+| Linux | `~/.config/n8n-ollama-desktop/` |
 | Windows | `%APPDATA%\n8n Ollama Desktop\` |
 
 ### Step 2 — Copy data
 
 Copy the subdirectories from the old location to the new one. Replace `<OLD>` and `<NEW>` with the paths from the table above.
 
-**macOS / Linux:**
+**macOS:**
 ```bash
-cp -r "<OLD>/n8n-data"   "<NEW>/n8n-data"
-cp -r "<OLD>/n8n-files"  "<NEW>/n8n-files"
-cp -r "<OLD>/n8n-custom" "<NEW>/n8n-custom"
-cp -r "<OLD>/ollama-data" "<NEW>/ollama-data"
+OLD="$HOME/Library/Application Support/n8n Local Desktop"
+NEW="$HOME/Library/Application Support/n8n Ollama Desktop"
+cp -r "$OLD/n8n-data"    "$NEW/n8n-data"
+cp -r "$OLD/n8n-files"   "$NEW/n8n-files"
+cp -r "$OLD/n8n-custom"  "$NEW/n8n-custom"
+cp -r "$OLD/ollama-data" "$NEW/ollama-data"
+```
+
+**Linux:**
+```bash
+OLD="$HOME/.config/n8n-local-desktop"
+NEW="$HOME/.config/n8n-ollama-desktop"
+cp -r "$OLD/n8n-data"    "$NEW/n8n-data"
+cp -r "$OLD/n8n-files"   "$NEW/n8n-files"
+cp -r "$OLD/n8n-custom"  "$NEW/n8n-custom"
+cp -r "$OLD/ollama-data" "$NEW/ollama-data"
 ```
 
 **Windows (PowerShell):**

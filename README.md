@@ -12,7 +12,9 @@ Desktop Electron app that runs <a href="https://n8n.io/">n8n</a> + <a href="http
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License"></a>
 </p>
 
-![Screenshot](assets/screenshot.png)
+<p align="center">
+  <a href="https://github.com/kkomelin/n8n-local-desktop/releases"><img src="assets/screenshot.png" alt="Screenshot" /></a>
+</p>
 
 <p align="center">
   <a href="https://github.com/kkomelin/n8n-local-desktop/releases"><strong>🚀 Download for your OS</strong></a>

@@ -99,6 +99,18 @@ Start **n8n Ollama Desktop**. Your workflows, credentials, and models should be 
 
 Once you've confirmed everything works, you can uninstall **n8n Local Desktop** and remove its data directory.
 
+**macOS:** Drag **n8n Local Desktop.app** to the Trash, then delete `~/Library/Application Support/n8n Local Desktop/`.
+
+**Linux (deb):**
+```bash
+sudo apt remove n8n-local-desktop
+rm -rf ~/.config/n8n-local-desktop
+```
+
+**Linux (AppImage):** Delete the `.AppImage` file and `~/.config/n8n-local-desktop/`.
+
+**Windows:** Uninstall via Settings → Apps, then delete `%APPDATA%\n8n Local Desktop\`.
+
 To also remove the old Docker volumes (they are separate from the app data directory):
 ```bash
 docker volume ls | grep n8n-local-desktop

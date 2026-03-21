@@ -17,7 +17,7 @@ Desktop Electron app that runs <a href="https://n8n.io/">n8n</a> + <a href="http
 </p>
 
 <p align="center">
-  <a href="https://github.com/kkomelin/n8n-local-desktop/releases"><strong>🚀 Download for your OS</strong></a>
+  <a href="https://github.com/kkomelin/n8n-local-desktop/releases"><strong>Download for your OS 🚀</strong></a>
 </p>
 
 > Docker is required - see [official installation docs](https://docs.docker.com/engine/install/) for platform-specific instructions.

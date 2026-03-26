@@ -13,9 +13,13 @@ const retryBtn = document.getElementById('retry-btn') as HTMLButtonElement
 const closeBtn = document.getElementById('close-btn') as HTMLButtonElement
 const progressArea = document.getElementById('progress-area') as HTMLElement
 const gpuPrompt = document.getElementById('gpu-prompt') as HTMLElement
-const gpuDetectedName = document.getElementById('gpu-detected-name') as HTMLElement
+const gpuDetectedName = document.getElementById(
+  'gpu-detected-name'
+) as HTMLElement
 const gpuOptHwLabel = document.getElementById('gpu-opt-hw-label') as HTMLElement
-const gpuOptHardware = document.getElementById('gpu-opt-hardware') as HTMLButtonElement
+const gpuOptHardware = document.getElementById(
+  'gpu-opt-hardware'
+) as HTMLButtonElement
 const gpuOptCpu = document.getElementById('gpu-opt-cpu') as HTMLButtonElement
 
 let cleanupStatus: (() => void) | undefined

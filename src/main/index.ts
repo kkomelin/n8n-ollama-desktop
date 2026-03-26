@@ -1,14 +1,12 @@
-import { app, BrowserWindow, ipcMain, Menu, shell, nativeTheme } from 'electron'
-import type { MenuItemConstructorOptions } from 'electron'
-import { spawn, execSync } from 'node:child_process'
-import path from 'node:path'
-import http from 'node:http'
+import { execSync, spawn } from 'node:child_process'
 import fs from 'node:fs'
+import http from 'node:http'
+import path from 'node:path'
+import type { MenuItemConstructorOptions } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, nativeTheme, shell } from 'electron'
+import { DOCKER_PROJECT_NAME, LINKS } from './config'
 import * as ollamaService from './lib/ollama-service'
-import { LINKS } from './config'
 import { cleanProgressLine } from './lib/progress-cleaner'
-
-const PROJECT_NAME = 'lonelynathan'
 
 function getAssetPath(...parts: string[]): string {
   return app.isPackaged
@@ -186,7 +184,7 @@ function composeArgs(subcommand: string, extra: string[] = []): string[] {
     '--file',
     composePath,
     '--project-name',
-    PROJECT_NAME,
+    DOCKER_PROJECT_NAME,
     '--project-directory',
     dataDir,
     subcommand,
@@ -227,7 +225,7 @@ function startCompose(): Promise<void> {
 
     let started = false
 
-    composeProcess.stdout.on('data', (d: Buffer) => {
+    composeProcess.stdout?.on('data', (d: Buffer) => {
       sendLog(d.toString())
       if (!started) {
         started = true
@@ -235,7 +233,7 @@ function startCompose(): Promise<void> {
       }
     })
 
-    composeProcess.stderr.on('data', (d: Buffer) => {
+    composeProcess.stderr?.on('data', (d: Buffer) => {
       sendLog(d.toString())
       if (!started) {
         started = true
@@ -348,7 +346,7 @@ function openApp(): void {
 function stopServices(): void {
   composeProcess = null
   try {
-    execSync(`docker compose --project-name ${PROJECT_NAME} down`, {
+    execSync(`docker compose --project-name ${DOCKER_PROJECT_NAME} down`, {
       stdio: 'ignore',
       timeout: 30_000,
     })
@@ -366,7 +364,7 @@ function containerExec(service: string, cmd: string[]): Promise<number> {
       '--file',
       composePath,
       '--project-name',
-      PROJECT_NAME,
+      DOCKER_PROJECT_NAME,
       '--project-directory',
       dataDir,
       'exec',

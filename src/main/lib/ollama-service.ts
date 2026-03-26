@@ -1,7 +1,6 @@
 import { spawn } from 'node:child_process'
+import { DOCKER_PROJECT_NAME } from '../config'
 import { cleanProgressLine } from './progress-cleaner'
-
-const PROJECT_NAME = 'lonelynathan'
 
 export const MODEL_NAME_RE = /^[a-zA-Z0-9:.\-/]+$/
 
@@ -49,7 +48,7 @@ function _baseArgs(): string[] {
     '--file',
     _composePath!,
     '--project-name',
-    PROJECT_NAME,
+    DOCKER_PROJECT_NAME,
     '--project-directory',
     _dataDir!,
     'exec',

@@ -1,6 +1,6 @@
 {
   "name": "lonelynathan",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "main": "out/main/index.js",
   "scripts": {
     "check": "tsc --noEmit",

@@ -29,6 +29,7 @@ LonelyNathan — Desktop app that runs <a href="https://n8n.io/">n8n</a> + <a hr
 - **No cloud, no subscriptions** - run n8n and local AI models entirely on your machine, free of charge
 - **Privacy by default** - your workflows and data never leave your computer
 - **One-click setup** - no manual Docker commands, no config files to edit; just [download](https://github.com/kkomelin/n8n-ollama-desktop/releases) and run
+- **GPU auto-detection** - detects NVIDIA and AMD GPUs on first launch and lets you choose between GPU and CPU inference; your choice is saved and applied automatically on every subsequent start
 - **Local LLMs included** - ships with Ollama pre-configured, so AI-powered workflows work out of the box
 - **Use your own models** - pull any model from Ollama's library or connect to LM Studio, llama.cpp, or a host Ollama instance
 - **Full community edition** - runs the official n8n Docker image with no integrations removed or disabled
@@ -53,6 +54,7 @@ See [docs/host-llm-servers.md](docs/host-llm-servers.md) for setup instructions.
 - [x] Make it possible to connect with the host machine's LLM servers from n8n workflows, e.g. LM Studio, llama.cpp, Ollama, etc.
 - [x] Add an About page with app version info
 - [x] Make it possible to install new models via the app menu (Tools > Models)
+- [x] Auto-detect GPU and use it for Ollama inference when available
 - [ ] [YOUR IDEA](https://github.com/kkomelin/n8n-ollama-desktop/issues/new)
 
 ---

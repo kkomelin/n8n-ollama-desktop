@@ -45,6 +45,7 @@ interface ElectronAPI {
   ollamaPullModel: (name: string) => Promise<{ success: boolean }>
   ollamaCancelPull: (name: string) => Promise<{ success: boolean }>
   ollamaDeleteModel: (name: string) => Promise<DeleteModelResult>
+  getUpdateStatus: () => Promise<string | null>
   onOllamaPullProgress: (cb: (data: PullProgressData) => void) => () => void
   onOllamaPullDone: (cb: (data: PullDoneData) => void) => () => void
 }

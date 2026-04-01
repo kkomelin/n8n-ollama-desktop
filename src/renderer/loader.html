@@ -32,7 +32,35 @@
     letter-spacing: .04em;
   }
 
-  .version-badge { margin-bottom: 36px; }
+  .version-badge {
+    margin-bottom: 36px;
+    position: relative;
+  }
+  .version-badge.has-update {
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+    transition: border-color .15s;
+  }
+  .version-badge.has-update:hover { border-color: var(--accent); }
+
+  .update-dot {
+    display: none;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .version-badge.has-update .update-dot {
+    display: block;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .3; }
+  }
 
   /* ── Card ── */
   .card {
@@ -257,7 +285,7 @@
 
     <img class="app-icon" src="assets/icon.png" alt="">
     <div class="brand">LonelyNathan</div>
-    <div class="version-badge" id="version">v—</div>
+    <div class="version-badge" id="version"><span id="version-text">v—</span><span class="update-dot"></span></div>
 
     <div class="card">
       <div class="progress-area" id="progress-area">

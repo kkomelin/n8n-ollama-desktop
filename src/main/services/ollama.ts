@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process'
-import { DOCKER_PROJECT_NAME } from '../config'
+import { DOCKER_PROJECT_NAME } from '../../shared/config'
 import { cleanProgressLine } from './progress-cleaner'
 
 export const MODEL_NAME_RE = /^[a-zA-Z0-9:.\-/]+$/

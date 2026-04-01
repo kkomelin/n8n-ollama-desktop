@@ -4,15 +4,16 @@ import http from 'node:http'
 import path from 'node:path'
 import type { MenuItemConstructorOptions } from 'electron'
 import { app, BrowserWindow, ipcMain, Menu, nativeTheme, shell } from 'electron'
-import { DOCKER_PROJECT_NAME, LINKS } from './config'
+import { DOCKER_PROJECT_NAME, LINKS } from '../shared/config'
+import { checkForUpdate } from './services/updater'
 import {
   type GpuType,
   detectGpu,
   loadGpuPreference,
   saveGpuPreference,
-} from './lib/gpu'
-import * as ollamaService from './lib/ollama-service'
-import { cleanProgressLine } from './lib/progress-cleaner'
+} from './services/gpu'
+import * as ollamaService from './services/ollama'
+import { cleanProgressLine } from './services/progress-cleaner'
 
 function getAssetPath(...parts: string[]): string {
   return app.isPackaged
@@ -45,6 +46,9 @@ let gpuType: GpuType = 'cpu'
 const activePulls = new Map<string, AbortController>()
 
 const isDev = !app.isPackaged
+
+let updateUrl: string | null = null
+let updateVersion: string | null = null
 
 // ── Theme sync ──
 
@@ -620,6 +624,19 @@ function createModelsWindow(): void {
   })
 }
 
+async function runUpdateCheck(): Promise<void> {
+  try {
+    const result = await checkForUpdate()
+    if (!result) return
+
+    updateUrl = result.url
+    updateVersion = result.version
+    buildMenu()
+  } catch {
+    // silent fail - update check is non-critical
+  }
+}
+
 function buildMenu(): void {
   const template: MenuItemConstructorOptions[] = [
     ...(process.platform === 'darwin' ? [{ role: 'appMenu' as const }] : []),
@@ -633,7 +650,12 @@ function buildMenu(): void {
     { role: 'windowMenu' as const },
     {
       role: 'help' as const,
-      submenu: [{ label: 'About', click: createAboutWindow }],
+      submenu: [
+        ...(updateUrl
+          ? [{ label: 'Update', click: () => shell.openExternal(updateUrl!) }]
+          : []),
+        { label: 'About', click: createAboutWindow },
+      ],
     },
   ]
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
@@ -654,6 +676,7 @@ app.whenReady().then(() => {
 
   buildMenu()
   createLoaderWindow()
+  runUpdateCheck()
 })
 
 app.on('window-all-closed', () => {
@@ -680,6 +703,8 @@ ipcMain.on('open-external', (_event, url: string) => {
 // ── Ollama model management ──
 
 ipcMain.handle('theme:get', () => currentTheme)
+
+ipcMain.handle('update:status', () => updateVersion)
 
 ipcMain.handle('ollama:status', async () => ollamaService.checkStatus())
 

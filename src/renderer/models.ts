@@ -1,5 +1,5 @@
 import './shared'
-import { LINKS } from './config'
+import { LINKS } from '../shared/config'
 
 interface CuratedModel {
   name: string

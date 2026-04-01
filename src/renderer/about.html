@@ -27,7 +27,31 @@
     animation: fadeIn .6s .05s ease-out both;
   }
 
-  .version-badge { margin-bottom: 28px; }
+  .version-badge {
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .version-badge.has-update { cursor: pointer; transition: border-color .15s; }
+  .version-badge.has-update:hover { border-color: var(--accent); }
+
+  .update-dot {
+    display: none;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .version-badge.has-update .update-dot {
+    display: block;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .3; }
+  }
 
   .divider {
     width: 100%;
@@ -94,7 +118,7 @@
 
     <img class="app-icon" src="assets/icon.png" alt="">
     <div class="app-name">LonelyNathan</div>
-    <div class="version-badge" id="version">v—</div>
+    <div class="version-badge" id="version"><span id="version-text">v—</span><span class="update-dot"></span></div>
 
     <div class="divider"></div>
 

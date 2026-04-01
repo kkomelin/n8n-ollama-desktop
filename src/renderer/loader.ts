@@ -1,9 +1,10 @@
 import './shared'
+import { LINKS } from '../shared/config'
 
+const versionBadge = document.getElementById('version') as HTMLElement
+const versionText = document.getElementById('version-text') as HTMLElement
 const version = new URLSearchParams(location.search).get('version')
-if (version)
-  (document.getElementById('version') as HTMLElement).textContent =
-    `v${version}`
+if (version) versionText.textContent = `v${version}`
 
 const statusEl = document.getElementById('status-text') as HTMLElement
 const logLineEl = document.getElementById('log-line') as HTMLElement
@@ -58,6 +59,22 @@ function unbindListeners(): void {
 }
 
 bindListeners()
+
+async function pollUpdateStatus(): Promise<void> {
+  for (let i = 0; i < 5; i++) {
+    const update = await window.electronAPI?.getUpdateStatus()
+    if (update) {
+      versionBadge.classList.add('has-update')
+      versionBadge.addEventListener('click', () => {
+        window.electronAPI?.openExternal(LINKS.releases)
+      })
+      return
+    }
+    await new Promise((r) => setTimeout(r, 2000))
+  }
+}
+
+pollUpdateStatus()
 
 let detectedGpu = ''
 

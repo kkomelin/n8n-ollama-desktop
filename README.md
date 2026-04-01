@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-LonelyNathan — Desktop app that runs <a href="https://n8n.io/">n8n</a> + <a href="https://ollama.com/">Ollama</a> locally via Docker.
+LonelyNathan: Desktop app that runs <a href="https://n8n.io/">n8n</a> + <a href="https://ollama.com/">Ollama</a> locally via Docker.
 </p>
 
 <p align="center">
@@ -55,6 +55,7 @@ See [docs/host-llm-servers.md](docs/host-llm-servers.md) for setup instructions.
 - [x] Add an About page with app version info
 - [x] Make it possible to install new models via the app menu (Tools > Models)
 - [x] Auto-detect GPU and use it for Ollama inference when available
+- [x] Add update notifications with a link to the latest release
 - [ ] [YOUR IDEA](https://github.com/kkomelin/n8n-ollama-desktop/issues/new)
 
 ---

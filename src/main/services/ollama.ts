@@ -43,14 +43,16 @@ export function init({ composePath, dataDir }: InitOptions): void {
 }
 
 function _baseArgs(): string[] {
+  if (!_composePath || !_dataDir)
+    throw new Error('Ollama service not initialized')
   return [
     'compose',
     '--file',
-    _composePath!,
+    _composePath,
     '--project-name',
     DOCKER_PROJECT_NAME,
     '--project-directory',
-    _dataDir!,
+    _dataDir,
     'exec',
     '-T',
     'ollama',

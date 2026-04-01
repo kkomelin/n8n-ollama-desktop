@@ -48,7 +48,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('ollama:pull-progress', handler)
     return () => ipcRenderer.removeListener('ollama:pull-progress', handler)
   },
-  getUpdateStatus: () => ipcRenderer.invoke('update:status') as Promise<string | null>,
+  getUpdateStatus: () =>
+    ipcRenderer.invoke('update:status') as Promise<string | null>,
   onOllamaPullDone: (
     cb: (data: { name: string; success: boolean; error?: string }) => void
   ) => {

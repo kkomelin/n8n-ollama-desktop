@@ -5,15 +5,15 @@ import path from 'node:path'
 import type { MenuItemConstructorOptions } from 'electron'
 import { app, BrowserWindow, ipcMain, Menu, nativeTheme, shell } from 'electron'
 import { DOCKER_PROJECT_NAME, LINKS } from '../shared/config'
-import { checkForUpdate } from './services/updater'
 import {
-  type GpuType,
   detectGpu,
+  type GpuType,
   loadGpuPreference,
   saveGpuPreference,
 } from './services/gpu'
 import * as ollamaService from './services/ollama'
 import { cleanProgressLine } from './services/progress-cleaner'
+import { checkForUpdate } from './services/updater'
 
 function getAssetPath(...parts: string[]): string {
   return app.isPackaged
@@ -141,7 +141,7 @@ function rendererFile(file: string): string {
 }
 
 function rendererUrl(file: string, params?: Record<string, string>): string {
-  const base = `${process.env['ELECTRON_RENDERER_URL']}/${file}`
+  const base = `${process.env.ELECTRON_RENDERER_URL}/${file}`
   if (!params) return base
   return `${base}?${new URLSearchParams(params)}`
 }
@@ -166,14 +166,14 @@ function createLoaderWindow(): void {
   })
 
   const version = app.getVersion()
-  if (isDev && process.env['ELECTRON_RENDERER_URL']) {
+  if (isDev && process.env.ELECTRON_RENDERER_URL) {
     loaderWindow.loadURL(rendererUrl('loader.html', { version }))
   } else {
     loaderWindow.loadFile(rendererFile('loader.html'), { query: { version } })
   }
 
   loaderWindow.once('ready-to-show', () => {
-    loaderWindow!.show()
+    loaderWindow?.show()
     startServices()
   })
 }
@@ -293,10 +293,8 @@ function waitForReady(): Promise<void> {
       }
 
       const req = http.get(ALLOWED_ORIGIN, (res) => {
-        if (
-          res.statusCode === 200 ||
-          (res.statusCode! >= 301 && res.statusCode! <= 308)
-        ) {
+        const code = res.statusCode ?? 0
+        if (code === 200 || (code >= 301 && code <= 308)) {
           sendLog(`n8n is ready (HTTP ${res.statusCode})`)
           resolve()
         } else {
@@ -579,7 +577,7 @@ function createAboutWindow(): void {
   win.setMenu(null)
 
   const query = { version: app.getVersion(), homepage: LINKS.homepage }
-  if (isDev && process.env['ELECTRON_RENDERER_URL']) {
+  if (isDev && process.env.ELECTRON_RENDERER_URL) {
     win.loadURL(rendererUrl('about.html', query))
   } else {
     win.loadFile(rendererFile('about.html'), { query })
@@ -611,7 +609,7 @@ function createModelsWindow(): void {
 
   modelsWindow.setMenu(null)
 
-  if (isDev && process.env['ELECTRON_RENDERER_URL']) {
+  if (isDev && process.env.ELECTRON_RENDERER_URL) {
     modelsWindow.loadURL(rendererUrl('models.html'))
   } else {
     modelsWindow.loadFile(rendererFile('models.html'))
@@ -652,7 +650,12 @@ function buildMenu(): void {
       role: 'help' as const,
       submenu: [
         ...(updateUrl
-          ? [{ label: 'Update', click: () => shell.openExternal(updateUrl!) }]
+          ? [
+              {
+                label: 'Update',
+                click: () => shell.openExternal(updateUrl as string),
+              },
+            ]
           : []),
         { label: 'About', click: createAboutWindow },
       ],

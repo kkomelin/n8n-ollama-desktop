@@ -164,12 +164,12 @@ function showConfirm(name: string): void {
 }
 
 async function doDelete(name: string): Promise<void> {
-  const result = await window.electronAPI!.ollamaDeleteModel(name)
+  const result = await window.electronAPI?.ollamaDeleteModel(name)
   if (result.error) {
     console.error('Delete failed:', result.error)
     return
   }
-  const data = await window.electronAPI!.ollamaListModels()
+  const data = await window.electronAPI?.ollamaListModels()
   if (data.models) renderModels(data.models)
 }
 
@@ -183,7 +183,7 @@ async function startPull(name: string): Promise<void> {
   progressTxt.textContent = 'Starting…'
   applyState('pulling')
 
-  await window.electronAPI!.ollamaPullModel(name)
+  await window.electronAPI?.ollamaPullModel(name)
 }
 
 function onProgress({ name, line }: PullProgressData): void {
@@ -201,7 +201,7 @@ async function onPullDone({ success }: PullDoneData): Promise<void> {
   progressEl.classList.remove('visible')
   inputEl.value = ''
 
-  const data = await window.electronAPI!.ollamaListModels()
+  const data = await window.electronAPI?.ollamaListModels()
   if (data.models) renderModels(data.models)
 
   applyState('ready')
@@ -212,13 +212,13 @@ async function onPullDone({ success }: PullDoneData): Promise<void> {
 async function init(): Promise<void> {
   applyState('loading')
 
-  const status = await window.electronAPI!.ollamaStatus()
+  const status = await window.electronAPI?.ollamaStatus()
   if (!status.running) {
     applyState('offline')
     return
   }
 
-  const data = await window.electronAPI!.ollamaListModels()
+  const data = await window.electronAPI?.ollamaListModels()
   if (data.error) {
     applyState('offline')
     return
@@ -228,8 +228,8 @@ async function init(): Promise<void> {
   applyState('ready')
 }
 
-const cleanupProgress = window.electronAPI!.onOllamaPullProgress(onProgress)
-const cleanupDone = window.electronAPI!.onOllamaPullDone(onPullDone)
+const cleanupProgress = window.electronAPI?.onOllamaPullProgress(onProgress)
+const cleanupDone = window.electronAPI?.onOllamaPullDone(onPullDone)
 
 window.addEventListener('unload', () => {
   cleanupProgress()
@@ -251,11 +251,11 @@ btnInstall.addEventListener('click', () => {
 
 btnCancel.addEventListener('click', async () => {
   if (currentPullName)
-    await window.electronAPI!.ollamaCancelPull(currentPullName)
+    await window.electronAPI?.ollamaCancelPull(currentPullName)
 })
 
 btnBrowseModels.addEventListener('click', () => {
-  window.electronAPI!.openExternal(LINKS.modelsBrowser)
+  window.electronAPI?.openExternal(LINKS.modelsBrowser)
 })
 
 init()

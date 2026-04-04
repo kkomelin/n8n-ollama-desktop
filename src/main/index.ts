@@ -594,9 +594,9 @@ function createModelsWindow(): void {
 
   modelsWindow = new BrowserWindow({
     width: 680,
-    height: 580,
+    height: 635,
     minWidth: 560,
-    minHeight: 480,
+    minHeight: 535,
     resizable: true,
     title: 'Models',
     ...(iconPath && { icon: iconPath }),

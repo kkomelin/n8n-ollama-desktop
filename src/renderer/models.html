@@ -64,7 +64,13 @@
   }
 
   /* ── Model list ── */
-  .model-list { display: flex; flex-direction: column; gap: 6px; }
+  .model-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 188px;
+    overflow-y: auto;
+  }
 
   .model-row {
     display: flex;

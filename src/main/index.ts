@@ -438,7 +438,7 @@ async function setupOllamaCredential(): Promise<void> {
     return
   }
 
-  sendStatus('Configuring Ollama connection…')
+  sendLog('[setup] Configuring Ollama connection…')
 
   const credentialsSrc = app.isPackaged
     ? path.join(process.resourcesPath, 'ollama-credentials.json')
@@ -545,10 +545,10 @@ async function startServices(): Promise<void> {
     await pullImages()
 
     await startCompose()
-    await waitForReady()
-    await setupOllamaCredential()
-    await waitForOllama()
-    await pullOllamaModel('llama3.2:3b')
+    await Promise.all([
+      waitForReady().then(setupOllamaCredential),
+      waitForOllama().then(() => pullOllamaModel('llama3.2:3b')),
+    ])
     openApp()
   } catch (err) {
     sendLog(`Error: ${(err as Error).message}`)

@@ -1,5 +1,5 @@
 import './shared'
-import { LINKS } from '../shared/config'
+import { LINKS, MESSAGES } from '../shared/config'
 
 const versionBadge = document.getElementById('version') as HTMLElement
 const versionText = document.getElementById('version-text') as HTMLElement
@@ -12,6 +12,7 @@ const loaderEl = document.getElementById('loader') as HTMLElement
 const retryWrap = document.getElementById('retry-wrap') as HTMLElement
 const retryBtn = document.getElementById('retry-btn') as HTMLButtonElement
 const closeBtn = document.getElementById('close-btn') as HTMLButtonElement
+const dockerInstallLink = document.getElementById('docker-install-link') as HTMLAnchorElement
 const progressArea = document.getElementById('progress-area') as HTMLElement
 const gpuPrompt = document.getElementById('gpu-prompt') as HTMLElement
 const gpuDetectedName = document.getElementById(
@@ -32,6 +33,7 @@ function setStatus(text: string): void {
   statusEl.classList.remove('error')
   loaderEl.classList.remove('error')
   retryWrap.classList.remove('visible')
+  dockerInstallLink.classList.remove('visible')
 }
 
 function showLog(text: string): void {
@@ -42,7 +44,12 @@ function setError(text: string): void {
   statusEl.textContent = text
   statusEl.classList.add('error')
   loaderEl.classList.add('error')
-  retryWrap.classList.add('visible')
+  if (text !== MESSAGES.dockerPermissionDenied) {
+    retryWrap.classList.add('visible')
+  }
+  if (text === MESSAGES.dockerNotAvailable) {
+    dockerInstallLink.classList.add('visible')
+  }
 }
 
 function bindListeners(): void {
@@ -106,3 +113,7 @@ retryBtn.addEventListener('click', () => {
 })
 
 closeBtn.addEventListener('click', () => window.electronAPI?.quit())
+
+dockerInstallLink.addEventListener('click', () => {
+  window.electronAPI?.openExternal(LINKS.dockerInstall)
+})

@@ -1,6 +1,6 @@
 {
   "name": "lonelynathan",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "main": "out/main/index.js",
   "scripts": {
     "check": "tsc --noEmit",
@@ -88,7 +88,9 @@
         "deb"
       ],
       "category": "Office",
-      "icon": "assets/linux/icons"
+      "icon": "assets/linux/icons",
+      "license": "Apache-2.0",
+      "description": "A desktop app for building n8n workflows with Ollama models."
     },
     "mac": {
       "target": [

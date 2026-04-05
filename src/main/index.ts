@@ -1,10 +1,11 @@
+import type { MenuItemConstructorOptions } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu, nativeTheme, shell } from 'electron'
 import { execSync, spawn } from 'node:child_process'
 import fs from 'node:fs'
 import http from 'node:http'
 import path from 'node:path'
-import type { MenuItemConstructorOptions } from 'electron'
-import { app, BrowserWindow, ipcMain, Menu, nativeTheme, shell } from 'electron'
-import { DOCKER_PROJECT_NAME, LINKS } from '../shared/config'
+import { DOCKER_PROJECT_NAME, LINKS, MESSAGES } from '../shared/config'
+
 import {
   detectGpu,
   type GpuType,
@@ -180,12 +181,18 @@ function createLoaderWindow(): void {
 
 // ── Docker / Compose helpers ──
 
-function dockerAvailable(): boolean {
+type DockerStatus = 'ok' | 'not-available' | 'permission-denied'
+
+function dockerStatus(): DockerStatus {
   try {
-    execSync('docker info', { stdio: 'ignore', timeout: 10_000 })
-    return true
-  } catch {
-    return false
+    execSync('docker info', { stdio: 'pipe', timeout: 10_000 })
+    return 'ok'
+  } catch (err) {
+    const stderr = (err as { stderr?: Buffer }).stderr?.toString() ?? ''
+    if (process.platform === 'linux' && stderr.includes('permission denied')) {
+      return 'permission-denied'
+    }
+    return 'not-available'
   }
 }
 
@@ -517,10 +524,13 @@ async function pullOllamaModel(model: string): Promise<void> {
 
 async function startServices(): Promise<void> {
   try {
-    if (!dockerAvailable()) {
-      sendError(
-        'Docker is not installed or not running. Please install and start it.'
-      )
+    const docker = dockerStatus()
+    if (docker === 'permission-denied') {
+      sendError(MESSAGES.dockerPermissionDenied)
+      return
+    }
+    if (docker !== 'ok') {
+      sendError(MESSAGES.dockerNotAvailable)
       return
     }
 

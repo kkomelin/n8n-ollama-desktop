@@ -18,7 +18,11 @@ const CURATED_MODELS: CuratedModel[] = [
   { name: 'phi4-mini', size: '~2.5 GB', desc: 'Microsoft, efficient' },
   { name: 'mistral-nemo', size: '~7.1 GB', desc: 'Mistral AI, 128K context' },
   { name: 'deepseek-r1:7b', size: '~4.7 GB', desc: 'Strong reasoning' },
-  { name: 'qwen3:4b', size: '~2.5 GB', desc: 'Alibaba, multilingual & reasoning' },
+  {
+    name: 'qwen3:4b',
+    size: '~2.5 GB',
+    desc: 'Alibaba, multilingual & reasoning',
+  },
   { name: 'qwen2.5-coder:7b', size: '~4.7 GB', desc: 'Best-in-class coding' },
   {
     name: 'nomic-embed-text',

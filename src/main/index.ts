@@ -519,7 +519,7 @@ async function startServices(): Promise<void> {
   try {
     if (!dockerAvailable()) {
       sendError(
-        'Docker is not installed or not running. Please install Docker and start it.'
+        'Docker is not installed or not running. Please install and start it.'
       )
       return
     }
